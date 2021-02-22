@@ -1,6 +1,6 @@
 # Code for "Gaussian Process Nowcasting: Application to COVID-19 Mortality Reporting"
 
-https://github.com/mrc-ide/GP_nowcasting
+https://github.com/ihawryluk/GP_nowcasting
 
 
 
