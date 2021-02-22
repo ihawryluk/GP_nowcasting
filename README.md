@@ -10,7 +10,7 @@ Updating observations of a signal due to the delays in the measurement process i
 
 *Arxiv link will go here*
 
-### Zip file contents
+### Contents
 
 #### data
 
