@@ -42,7 +42,6 @@ model {
                 {n[t,d] ~ neg_binomial_2(lambda[t,d],r);}}// NEG BIN
         }
             
-    // priors
     
     // neg binomial rate
     r ~ gamma(500, 2);  // FOR THE NEG-BIN LIKELIHOOD
@@ -50,10 +49,8 @@ model {
     // alpha
     tau2alpha ~ gamma(0.01, 0.01);
     alpha[1] ~ normal(0, sqrt(1/0.001));
-    //alpha[2] ~ normal(0, sqrt(1/0.001));
 
     for( t in 2:T ){
-      //alpha[t] ~ normal(sqrt(alpha[t-1]*alpha[t-2]),sqrt(1/tau2alpha));}
     alpha[t] ~ normal(alpha[t-1],sqrt(1/tau2alpha));}
 
 

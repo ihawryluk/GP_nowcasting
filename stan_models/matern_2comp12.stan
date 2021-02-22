@@ -61,12 +61,6 @@ transformed parameters {
     for (i in 1:(T-1)) {
       K1b[i, i] = K1bdiag;
       for (j in (i + 1):T) {
-      // squared exponential kernel
-//        K1b[i, j] = sq_alpha1b
-//                * exp(-0.5 * dot_self((x[i] - x[j]) ./ rho_gp1b));
-        // Matern 1/2 kernel
-        //  * exp( -pow(3,0.5) * sqrt(dot_self((x[i] - x[j]) ./ rho_gp1b))); // shortrange  matern 3/2  
-
             tmp = sqrt(dot_self((x[i] - x[j]) ./ rho_gp1b));
             K1b[i, j] = sq_alpha1b * exp(-1 * tmp);
             K1b[j, i] = K1b[i, j];

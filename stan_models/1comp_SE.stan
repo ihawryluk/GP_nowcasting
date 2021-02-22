@@ -26,7 +26,6 @@ parameters {
     matrix[T,D] z;
 }
 transformed parameters {
-//    real<lower=0> lambda[T,D];  
     matrix[T,D] lambda;
     matrix[T, T] L_K;
     matrix[T, T] K = cov_exp_quad(x, alpha_gp, rho_gp);
@@ -37,7 +36,6 @@ transformed parameters {
     L_K = cholesky_decompose(K);
     GP =  L_K * z;
 
-//    lambda =  exp(GP); //lambda only GP, or GP as residual:    
     for( t in 1:T )
         {
             for(d in 1:D){
@@ -58,13 +56,12 @@ model {
         {
         for(d in 1:D){
             if (n[t,d] < 1000000)
-                {n[t,d] ~ neg_binomial_2(lambda[t,d],r);}}// NEG BIN
+                {n[t,d] ~ neg_binomial_2(lambda[t,d],r);}}
         }
             
-    // priors
     
     // neg binomial rate
-    r ~ gamma(500, 2);  // FOR THE NEG-BIN LIKELIHOOD
+    r ~ gamma(500, 2);
     
 }
 generated quantities {
@@ -76,7 +73,6 @@ generated quantities {
         {
             for(d in 1:D)
             {
-//                if (n_predict[t,d] > 100000)
                 {
                     n_predict[t,d] = neg_binomial_2_rng(lambda[t,d],r);
                 }

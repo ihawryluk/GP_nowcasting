@@ -64,10 +64,6 @@ parameters {
     real<lower=0> alpha_gp2_d;
     real<lower=0> delta1;
     real<lower=0> delta2;
-//    vector<lower=0>[1] rho_gp1_t_dist; 
-//    vector<lower=0>[1] rho_gp2_t_dist;
-//    vector<lower=0>[1] rho_gp1_d_dist;
-//    vector<lower=0>[1] rho_gp2_d_dist;
     matrix[T,D] z1;
     matrix[T,D] z2;
 }

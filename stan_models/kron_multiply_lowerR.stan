@@ -9,18 +9,12 @@ functions {
       return s;
   }
   
-  // return (A \otimes B) v where:
-  // A is n1 x n1, B = n2 x n2, V = n2 x n1 = reshape(v,n2,n1)
-  //from seth icml
     matrix kron_mvprod(matrix A, matrix B, matrix V) 
     {
         return transpose(A*transpose(B*V));
     }
   
-    // A is a length n1 vector, B is a length n2 vector.
-    // Treating them as diagonal matrices, this calculates:
-    // v = (A \otimes B + sigma2)ˆ{-1}
-    // and returns the n1 x n2 matrix V = reshape(v,n1,n2)
+
     matrix calculate_eigenvalues(vector A, vector B, int n1, int n2, real sigma2) 
     {
         matrix[n1,n2] e;
@@ -70,10 +64,6 @@ parameters {
     real<lower=0> alpha_gp2_d;
     real<lower=0> delta1;
     real<lower=0> delta2;
-//    vector<lower=0>[1] rho_gp1_t_dist; 
-//    vector<lower=0>[1] rho_gp2_t_dist;
-//    vector<lower=0>[1] rho_gp1_d_dist;
-//    vector<lower=0>[1] rho_gp2_d_dist;
     matrix[T,D] z1;
     matrix[T,D] z2;
 }
@@ -117,8 +107,6 @@ transformed parameters {
                 {
                     K1_t[i, j] = sq_alpha1_t
                             * exp(-0.5 * dot_self((time[i] - time[j]) ./ rho_gp1_t_dist)) ; //long range sq exp                         
-                    //K2_t[i, j] = sq_alpha2_t
-                      //      * exp( -sqrt(dot_self((time[i] - time[j]) ./ rho_gp2_t_dist)));// shortrange  matern 1/2
                     K2_t[i, j] = sq_alpha2_t
                             * exp( -0.5 * dot_self((time[i] - time[j]) ./ rho_gp2_t_dist));// shortrange  sq exp
                     K1_t[j, i] = K1_t[i, j];
@@ -137,8 +125,6 @@ transformed parameters {
                 {
                     K1_d[i, j] = sq_alpha1_d
                             * exp(-0.5 * dot_self((delay[i] - delay[j]) ./ rho_gp1_d_dist)) ; //long range sq exp
-                    //K2_d[i, j] = sq_alpha2_d
-                      //     * exp( -sqrt(dot_self((delay[i] - delay[j]) ./ rho_gp2_d_dist)));// shortrange  matern 1/2
                     K2_d[i, j] = sq_alpha2_d
                             * exp( -0.5 * dot_self((delay[i] - delay[j]) ./ rho_gp2_d_dist));// shortrange  sq exp
                     K1_d[j, i] = K1_d[i, j];
@@ -153,7 +139,6 @@ transformed parameters {
     L_K2_t = cholesky_decompose(K2_t);
     L_K2_d = cholesky_decompose(K2_d);
     
-//    GP1 = kron_mvprod(L_K1_d, L_K1_t, transpose(z1));
     GP1 = kron_mvprod(L_K1_d, L_K1_t, z1);
     GP2 = kron_mvprod(L_K2_d, L_K2_t, z2);
 
@@ -173,17 +158,10 @@ model
 {
     delta1 ~ normal(0,1e-7);
     delta2 ~ normal(0,1e-7);
-//    rho_gp1_t_dist[1] ~ normal(rho_gp1_t, 0.1); //longrange rho T
-//    rho_gp2_t_dist[1] ~ normal(rho_gp2_t, 0.1); //shortrange rho T
-//    rho_gp1_d_dist[1] ~ normal(rho_gp1_d, 0.1); //longrange rho D
-//    rho_gp2_d_dist[1] ~ normal(rho_gp2_d, 0.1); //shortrange rho D
     
-//    alpha_gp1_t ~ normal(T,5);
     alpha_gp1_t ~ normal(T,1);
-
     alpha_gp1_d ~ normal(0,1);
     
-//    alpha_gp2_t ~ normal(D,5);
     alpha_gp2_t ~ normal(D,1);
     alpha_gp2_d ~ normal(0,1);
     

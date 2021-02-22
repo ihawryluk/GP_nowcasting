@@ -82,10 +82,10 @@ transformed parameters {
 }
 model {
     rho_gp1 ~ normal(T,0.1); // lengthscale
-    alpha_gp1 ~ normal(15,2); // scale // was 8
+    alpha_gp1 ~ normal(15,2); // scale 
     
     rho_gp1b ~ normal(1,0.01); // lengthscale
-    alpha_gp1b ~ normal(5,2); // scale // was 10
+    alpha_gp1b ~ normal(5,2); // scale 
 
 for (t in 1:T)
     {
@@ -101,7 +101,7 @@ for (t in 1:T)
         {
         for(d in 1:Dmax){
            if (n[t,d] < 1000000)
-                {n[t,d] ~ neg_binomial_2(lambda[t,d],r);}}// NEG BIN
+                {n[t,d] ~ neg_binomial_2(lambda[t,d],r);}}
         }
 
 }
