@@ -14,7 +14,7 @@ Updating observations of a signal due to the delays in the measurement process i
 
 All data needed to reproduce the analysis is contained in the *data* folder. 
 
-- *df_SIVEP_nowcast_allStates_08-02-2021.csv* -- the SIVEP-Gripe datasets up to the 8th Feb 2021 release, which were downloaded from <https://opendatasus.saude.gov.br/dataset/bd-srag-2020> website and further processed
+- *df_SIVEP_nowcast_Brazil_31-05-2021, df_SIVEP_nowcast_allStates_08-02-2021.csv* -- the SIVEP-Gripe datasets up to the 31st May 2021 and 8th Feb 2021 releases, which were downloaded from <https://opendatasus.saude.gov.br/dataset/bd-srag-2020> website and further processed
 - *experts_response.csv* -- nowcasts of the group of anonymous infectious epidemiology experts, as described in section 4.3 and presented in Fig.6
 - *get_states_data.R* -- script for downloading the SIVEP-Gripe datasets and pre-processing them to get *df_SIVEP_nowcast_allStates_08-02-2021.csv*
 
@@ -47,5 +47,5 @@ The remaining files were used to carry out model runs, plotting and analysis of 
 
 - Python packages: pandas, matplotlib, numpy, pystan, seaborn, arviz, sklearn, scipy, pickle, datetime
 
-- R packages: rstan, matrixStats, data, lubridate, gdata, dplyr, tidyr, EnvStats, scales, tidyverse, abind, xtable, ggplot2, gridExtra, ggpubr, bayesplot, cowplot, openxlsx, loo, patchwork
+- R packages: rstan, matrixStats, data, lubridate, gdata, dplyr, tidyr, EnvStats, scales, tidyverse, abind, xtable, ggplot2, gridExtra, ggpubr, bayesplot, cowplot, openxlsx, loo, patchwork, properscoring
 
