@@ -65,7 +65,7 @@ parameters {
     real<lower=0> delta1;
     real<lower=0> delta2;
     matrix[T,D] z1;
-    matrix[T,D] z2;
+    //matrix[T,D] z2;
 }
 
 
@@ -75,17 +75,17 @@ transformed parameters {
     matrix<lower=0>[T,D] lambda_gp2;
     
     matrix[T,D] GP1;//long range
-    matrix[T,D] GP2;//short range
+    //matrix[T,D] GP2;//short range
     
     matrix[T, T] K1_t;
     matrix[T, T] K2_t;
     matrix[T, T] L_K1_t;
-    matrix[T, T] L_K2_t;
+   // matrix[T, T] L_K2_t;
     
     matrix[D, D] K1_d;
     matrix[D, D] K2_d;
     matrix[D, D] L_K1_d;
-    matrix[D, D] L_K2_d;
+    //matrix[D, D] L_K2_d;
     
     real sq_alpha1_t = square(alpha_gp1_t);
     real sq_alpha2_t = square(alpha_gp2_t);
@@ -133,21 +133,24 @@ transformed parameters {
         }
     K1_d[D, D] = K1diag_d;
     K2_d[D, D] = K2diag_d;
+	
+	
 
-    L_K1_t = cholesky_decompose(K1_t);
-    L_K1_d = cholesky_decompose(K1_d);
-    L_K2_t = cholesky_decompose(K2_t);
-    L_K2_d = cholesky_decompose(K2_d);
+    L_K1_t = cholesky_decompose(K1_t + K2_t);
+    L_K1_d = cholesky_decompose(K1_d + K2_d);
+    //L_K2_t = cholesky_decompose(K2_t);
+    //L_K2_d = cholesky_decompose(K2_d);
     
+    //GP1 = kron_mvprod(L_K1_d, L_K1_t, z1);
+    //GP2 = kron_mvprod(L_K2_d, L_K2_t, z2);
     GP1 = kron_mvprod(L_K1_d, L_K1_t, z1);
-    GP2 = kron_mvprod(L_K2_d, L_K2_t, z2);
 
     for (t in 1:T)
         {
             for(d in 1:D)
                 {
                     lambda_gp1[t,d] = exp(GP1[t,d]);
-                    lambda_gp2[t,d] = exp(GP2[t,d]);
+                    lambda_gp2[t,d] = 1; //exp(GP2[t,d]);
                     lambda[t,d] = lambda_gp1[t,d] * lambda_gp2[t,d]; // put outside loop?
                 }
         }
@@ -172,12 +175,12 @@ model
             {
                 {
                    z1[t,d] ~ normal(0,0.1);
-                   z2[t,d] ~ normal(0,0.1);
+                   //z2[t,d] ~ normal(0,0.1);
                 }
             }
     }
     
-    r ~  gamma(200,2);  //400
+    r ~  gamma(200,2);
     for( t in 1:T )
         {
             for(d in 1:D)
