@@ -45,7 +45,7 @@ The remaining files were used to carry out model runs, plotting and analysis of 
 
 - Python, R, Jupyter notebooks
 
-- Python packages: pandas, matplotlib, numpy, pystan, seaborn, arviz, sklearn, scipy, pickle, datetime
+- Python packages: pandas, matplotlib, numpy, pystan, seaborn, arviz, sklearn, scipy, pickle, datetime, properscoring
 
 - R packages: rstan, matrixStats, data, lubridate, gdata, dplyr, tidyr, EnvStats, scales, tidyverse, abind, xtable, ggplot2, gridExtra, ggpubr, bayesplot, cowplot, openxlsx, loo, patchwork, properscoring
 
